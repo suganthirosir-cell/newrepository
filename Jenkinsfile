@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/suganthirosir-cell/myfirstrepository.git'
+                git 'https://github.com/suganthirosir-cell/newrepository.git'
             }
         }
 
