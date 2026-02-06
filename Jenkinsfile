@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.11'
+        }
+    }
 
     stages {
         stage('Clone') {
@@ -10,14 +14,12 @@ pipeline {
 
         stage('Install') {
             steps {
-                // Linux container → use sh
                 sh 'pip install streamlit'
             }
         }
 
         stage('Run App') {
             steps {
-                // Make sure file name matches your repo
                 sh 'streamlit run newapp.py --server.headless true --server.port 8501'
             }
         }
