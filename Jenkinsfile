@@ -4,19 +4,21 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/suganthirosir-cell/newrepository.git'
+                git branch: 'main', url: 'https://github.com/suganthirosir-cell/newrepository.git'
             }
         }
 
         stage('Install') {
             steps {
-                bat 'pip install streamlit'
+                // Linux container → use sh
+                sh 'pip install streamlit'
             }
         }
 
         stage('Run App') {
             steps {
-                bat 'streamlit run app.py --server.headless true'
+                // Make sure file name matches your repo
+                sh 'streamlit run newapp.py --server.headless true --server.port 8501'
             }
         }
     }
