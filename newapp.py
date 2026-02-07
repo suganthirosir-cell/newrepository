@@ -1,144 +1,207 @@
-# app.py
-import streamlit as st
-
-# Page config
-st.set_page_config(
-    page_title="My Awesome App",
-    page_icon="🚀",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-
-# Modern CSS Styling
-st.markdown(
-    """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 My Modern App</title>
     <style>
-    /* Background gradient */
-    .stApp {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        font-family: 'Segoe UI', sans-serif;
-        color: white;
-    }
+        /* Global */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        h1 {
+            text-align: center;
+            font-size: 42px;
+            margin-top: 30px;
+        }
 
-    /* Main title */
-    h1 {
-        text-align: center;
-        font-size: 42px;
-        color: #ffffff;
-        font-weight: bold;
-        margin-bottom: 30px;
-    }
+        /* Container */
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
 
-    /* Card container */
-    .card {
-        background: rgba(255, 255, 255, 0.12);
-        backdrop-filter: blur(12px);
-        padding: 25px;
-        border-radius: 18px;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        margin-bottom: 20px;
-        color: white;
-    }
+        /* Sidebar */
+        .sidebar {
+            width: 220px;
+            background: linear-gradient(180deg, #141e30, #243b55);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .sidebar button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            background: linear-gradient(45deg, #ff512f, #dd2476);
+            color: white;
+            transition: 0.3s;
+        }
+        .sidebar button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #36d1dc, #5b86e5);
+        }
 
-    /* Sidebar */
-    section[data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #141e30, #243b55);
-        color: white;
-    }
+        /* Main content */
+        .main {
+            flex: 1;
+            padding: 30px;
+            box-sizing: border-box;
+        }
 
-    /* Buttons */
-    .stButton>button {
-        background: linear-gradient(45deg, #ff512f, #dd2476);
-        color: white;
-        border: none;
-        border-radius: 12px;
-        height: 50px;
-        font-size: 18px;
-        font-weight: bold;
-        transition: 0.3s;
-    }
+        /* Card style */
+        .card {
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(12px);
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
 
-    .stButton>button:hover {
-        transform: scale(1.05);
-        background: linear-gradient(45deg, #36d1dc, #5b86e5);
-    }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: none;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
 
-    /* Input boxes */
-    input, textarea {
-        border-radius: 10px !important;
-    }
+        .result {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            background-color: rgba(0,255,150,0.2);
+            font-weight: bold;
+        }
 
-    /* Success message */
-    .stSuccess {
-        background-color: rgba(0,255,150,0.2);
-        border-radius: 10px;
-        padding: 10px;
-    }
+        .error {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            background-color: rgba(255,0,0,0.2);
+            font-weight: bold;
+        }
+
     </style>
-    """,
-    unsafe_allow_html=True
-)
+</head>
+<body>
 
-# Title
-st.markdown("<h1>🚀 Welcome to My Modern App</h1>", unsafe_allow_html=True)
+    <h1>🚀 Welcome to My Modern App</h1>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>📌 Navigation</h2>
+            <button onclick="showPage('home')">Home</button>
+            <button onclick="showPage('about')">About</button>
+            <button onclick="showPage('contact')">Contact</button>
+        </div>
 
-# Sidebar
-st.sidebar.header("📌 Navigation")
-page = st.sidebar.radio("Go to", ["Home", "About", "Contact"])
+        <!-- Main content -->
+        <div class="main">
+            <!-- Home Page -->
+            <div id="home" class="card page">
+                <h2>🧮 Interactive Calculator</h2>
+                <label>Enter first number:</label>
+                <input type="number" id="num1" value="0">
+                
+                <label>Enter second number:</label>
+                <input type="number" id="num2" value="0">
+                
+                <label>Select operation:</label>
+                <select id="operation">
+                    <option>Add</option>
+                    <option>Subtract</option>
+                    <option>Multiply</option>
+                    <option>Divide</option>
+                </select>
+                
+                <button onclick="calculate()">Calculate</button>
+                <div id="calcResult"></div>
+            </div>
 
-# Home Page
-if page == "Home":
-    st.markdown('<div class="card">', unsafe_allow_html=True)
-    st.subheader("🧮 Interactive Calculator")
+            <!-- About Page -->
+            <div id="about" class="card page" style="display:none;">
+                <h2>📖 About This App</h2>
+                <p>This is a modern web application built using <strong>HTML, CSS & JavaScript</strong>.</p>
+                <ul>
+                    <li>✔ Beautiful modern UI</li>
+                    <li>✔ Interactive calculator</li>
+                    <li>✔ Multi-page navigation</li>
+                    <li>✔ Fully client-side & responsive</li>
+                </ul>
+            </div>
 
-    num1 = st.number_input("Enter first number", value=0)
-    num2 = st.number_input("Enter second number", value=0)
-    operation = st.selectbox("Select operation", ["Add", "Subtract", "Multiply", "Divide"])
+            <!-- Contact Page -->
+            <div id="contact" class="card page" style="display:none;">
+                <h2>📩 Contact Me</h2>
+                <label>Your Name:</label>
+                <input type="text" id="name">
+                <label>Your Email:</label>
+                <input type="email" id="email">
+                <label>Your Message:</label>
+                <textarea id="message" rows="4"></textarea>
+                <button onclick="sendMessage()">Send Message</button>
+                <div id="contactResult"></div>
+            </div>
+        </div>
+    </div>
 
-    if st.button("Calculate"):
-        if operation == "Add":
-            st.success(f"Result: {num1 + num2}")
-        elif operation == "Subtract":
-            st.success(f"Result: {num1 - num2}")
-        elif operation == "Multiply":
-            st.success(f"Result: {num1 * num2}")
-        elif operation == "Divide":
-            if num2 != 0:
-                st.success(f"Result: {num1 / num2}")
-            else:
-                st.error("Cannot divide by zero!")
+    <script>
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.style.display = 'none');
+            document.getElementById(pageId).style.display = 'block';
+        }
 
-    st.markdown('</div>', unsafe_allow_html=True)
+        function calculate() {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const op = document.getElementById('operation').value;
+            const resultDiv = document.getElementById('calcResult');
 
-# About Page
-elif page == "About":
-    st.markdown('<div class="card">', unsafe_allow_html=True)
-    st.subheader("📖 About This App")
-    st.write(
-        """
-        This is a modern web application built using **Streamlit**.
-        
-        ✔ Beautiful modern UI  
-        ✔ Interactive calculator  
-        ✔ Multi-page navigation  
-        ✔ CI/CD using Jenkins & GitHub  
-        """
-    )
-    st.markdown('</div>', unsafe_allow_html=True)
+            let result;
+            if (op === 'Add') result = num1 + num2;
+            else if (op === 'Subtract') result = num1 - num2;
+            else if (op === 'Multiply') result = num1 * num2;
+            else if (op === 'Divide') {
+                if (num2 === 0) {
+                    resultDiv.innerHTML = '<div class="error">Cannot divide by zero!</div>';
+                    return;
+                }
+                result = num1 / num2;
+            }
 
-# Contact Page
-elif page == "Contact":
-    st.markdown('<div class="card">', unsafe_allow_html=True)
-    st.subheader("📩 Contact Me")
+            resultDiv.innerHTML = `<div class="result">Result: ${result}</div>`;
+        }
 
-    name = st.text_input("Your Name")
-    email = st.text_input("Your Email")
-    message = st.text_area("Your Message")
+        function sendMessage() {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            const contactDiv = document.getElementById('contactResult');
 
-    if st.button("Send Message"):
-        if name and email and message:
-            st.success("Message sent successfully! 🚀")
-        else:
-            st.error("Please fill all fields.")
-
-    st.markdown('</div>', unsafe_allow_html=True)
+            if (name && email && message) {
+                contactDiv.innerHTML = '<div class="result">Message sent successfully! 🚀</div>';
+            } else {
+                contactDiv.innerHTML = '<div class="error">Please fill all fields.</div>';
+            }
+        }
+    </script>
+</body>
+</html>
