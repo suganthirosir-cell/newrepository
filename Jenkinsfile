@@ -16,7 +16,7 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repo') {
+        stage('Clone Repo') {s
             steps {
                 git branch: 'main', url: 'https://github.com/suganthirosir-cell/newrepository.git'
             }
