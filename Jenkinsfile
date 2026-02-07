@@ -8,7 +8,36 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
+                git branch: 'main', url: 'https://github.com/suganthirosir-cell/newreppipeline {
+    agent any
+
+    environment {
+        APP_PORT = "8501"
+    }
+
+    stages {
+        stage('Clone Repo') {
+            steps {
                 git branch: 'main', url: 'https://github.com/suganthirosir-cell/newrepository.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                // Install Node.js http-server globally
+                sh 'npm install -g http-server'
+            }
+        }
+
+        stage('Run App') {
+            steps {
+                // Serve the HTML file on port 8501
+                sh "http-server -p ${APP_PORT} -c-1"
+            }
+        }
+    }
+}
+ository.git'
             }
         }
 
